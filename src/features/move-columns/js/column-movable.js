@@ -54,6 +54,9 @@
              */
             colMovable: {
               columnPositionChanged: function (colDef, originalPosition, newPosition) {
+              },
+              isMoveable: function(colDef, originalPosition, newPosition) {
+                return true;
               }
             }
           },
@@ -169,8 +172,9 @@
       },
       redrawColumnAtPosition: function (grid, originalPosition, newPosition) {
         var columns = grid.columns;
-
-        if (originalPosition === newPosition) {
+        var isChangePosition = grid.api.colMovable.raise.columnPositionChanged(originalColumn.colDef, originalPosition, newPosition);
+      
+        if (originalPosition === newPosition || !isChangePosition) {
           return;
         }
 
